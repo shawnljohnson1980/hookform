@@ -8,16 +8,28 @@ const UserForm = (props) => {
   const [birthday, setBirthday] = useState("");
   const [password, setpassword] = useState("");
   const [confirmPassword, setconfirmPassword] = useState("");
+  const [hasBeenSubmitted, setHasBeenSubmitted] = useState(false);
 
   const createUser=(e)=>{
     e.preventDefault();
     console.log(e)
     const newUser={userName,firstName,lastName,email,password,confirmPassword,birthday};
     console.log("welcome",newUser);
+     setHasBeenSubmitted( true );
   };
+  const formMessage = () => {
+    if( hasBeenSubmitted ) {
+  return "Thank you for submitting the form!";
+} else {
+  return "Welcome, please submit the form";
+}
+};
   return (
     <>
       <form class="mt-5 p-3 shadow border border-rounded border-white" onSubmit={(e)=>createUser}>
+      <div className="form-group">
+        <h3>{formMessage()}</h3>
+      </div>
         <div class="form-group" >
           <label class="mt-4"  htmlFor="birthday">Birthday:</label>
           <input
