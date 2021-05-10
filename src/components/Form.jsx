@@ -8,81 +8,89 @@ const UserForm = (props) => {
   const [birthday, setBirthday] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [hasBeenSubmitted, setHasBeenSubmitted] = useState(false);
   const [firstNameError, setFirstNameError] = useState("");
   const [userNameError, setUserNameError] = useState("");
   const [lastNameError, setLastNameError] = useState("");
   const [birthdayError, setBirthdayError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [passwordError,setPasswordError]=useState("");
-  const [confimPasswordError,setConfirmPasswordError]=useState("");
-
-  const createUser=(e)=>{
+  const [confirmPasswordError,setConfirmPasswordError]=useState("");
+  const createUser= (e) =>{
     e.preventDefault();
-    console.log(e)
-    const newUser={userName,firstName,lastName,email,password,confirmPassword,birthday};
+    const newUser={birthday,userName,firstName,lastName,email,password,confirmPassword};
     console.log("welcome",newUser);
-    setHasBeenSubmitted( true );
-  };
-
-const formMessage = () => {
-  if( hasBeenSubmitted ) {
-return "Thank you for submitting the form!";
-} else {
-return "Welcome, please register";
-}
-}
-const handleFirstName = (e) => {
-  setFirstName(e.target.value);
-  if(e.target.value.length < 2 | e.target.value.length ==0) {{}
-    setFirstNameError("First name is required!");
-  } else if(e.target.value.length < 3) {
-    setFirstNameError("First Name must be 3 characters or longer!");
-  
-const handleLastName = (e) => {
-  setLastName(e.target.value);
-  if(e.target.value.length < 2 | e.target.value.length ==0) {
-  setLastNameError("First name is required!");
-  } else if(e.target.value.length > 45) {
-  setLastNameError("Last Name cannot be longet than 45 Characters");
-
-const handleUserName = (e) => {
-    setUserName(e.target.value);
-    if(e.target.value.length < 2 | e.target.value.length ==0) {
-    setUserNameError("First name is required!");
-    } else if(e.target.value.length > 45) {
-    setUserNameError("Last Name cannot be longet than 45 Characters");
-          
-const handleBirthday = (e) => {
+  }
+const handleBirthday= e =>{
   setBirthday(e.target.value);
-  if(e.target.value.length <= 0 ) {
-  setBirthdayError("A date must be selected.");
-      
-const handleEmail = (e) => {
+  if (e.target.value.length==null){
+    setBirthdayError("A date must be selected.")
+  }else setBirthdayError(" ")
+}
+const handleUserName= e =>{
+  setUserName(e.target.value);
+  if (e.target.value.length<5 ){
+    setUserNameError("User Name must be at least 5 characters long.")
+  }else if (e.target.value.length> 45){
+    setUserNameError("User name cannot be longer than 45 characters long.")
+  }else{
+    setUserNameError(" ")
+  }
+  }
+const handleFirstName = e =>{
+setFirstName(e.target.value);
+if(e.target.value.length<2 ){
+  setFirstNameError("First Name Mustr be at least 2 characters in length.")
+}else if(e.target.value.length> 45 ){
+  setFirstNameError("First Name Cannot be longer than 45 characters in length")
+}else{
+  setFirstNameError(" ")
+}
+}
+const handleLastName = e =>{
+  setLastName(e.target.value);
+  if(e.target.value.length<2 ){
+    setLastNameError("Last Name Mustr be at least 2 characters in length.")
+  }else if(e.target.value.length> 45 ){
+    setLastNameError("Last Name Cannot be longer than 45 characters in length")
+  }else{
+    setLastNameError(" ")
+  }
+  }
+  const handleEmail = e =>{
     setEmail(e.target.value);
-    if(e.target.value.length < 2 | e.target.value.length ==0) {
-    setEmailError("First name is to short!");
-    } else if(e.target.value.length > 45) {
-    setEmailError("Last Name cannot be longet than 45 Characters")
-
-const handlePassword = (e) => {
-    setPassword(e.target.value);
-    if(e.target.value.length < 2 | e.target.value.length ==0) {
-    setPasswordError("First name is required!");
-    } else if(e.target.value.length > 45) {
-    setPasswordError("Last Name cannot be longet than 45 Characters")
-
-const handleConfirmPassword = (e) => {
-    setConfirmPassword(e.target.value);
-    if(e.target.value.length < 2 | e.target.value.length ==0) {
-    setConfirmPasswordError(" Confirm Password must belonger than 2 characters");
-    } else if(e.target.value.length > 45) {
-    setConfirmPasswordError("Confirm Password cannot be longer than 45 characters ")
-    }else if (confirmPassword != password){
-      setConfirmPasswordError("Passwords Must Match.")
+    if(e.target.value.length<=" " ){
+      setEmailError("Please Enter Your Email Address")
+    }else if(e.target.value.length!==  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) {
+      setEmailError("Please Enter A Valid Email Address")
+    }else{
+      setEmailError(" ")
+    } 
+    }
+    const handlePassword = e =>{
+      setPassword(e.target.value);
+      if(e.target.value.length<8 ){
+        setPasswordError("Password Must Be At Least 8 Characters In Length")
+      }else if(e.target.value.length>60) {
+        setPasswordError("Password Cannot be longer than 60 Characters In Length")
+      }else{
+        setPasswordError(" ")
+      }
+      }
+      const handleConfirmPassword = e =>{
+        setConfirmPassword(e.target.value);
+        if(e.target.value.length<8 ){
+          setConfirmPasswordError("Password Must Be At Least 8 Characters In Length")
+        }else if(e.target.value.length>60) {
+          setConfirmPasswordError("Password Cannot be longer than 60 Characters In Length")
+        }else if(e.target.value!==password){
+          setConfirmPasswordError("Passwords Must Match.")
+        }else{
+          setConfirmPasswordError(" ")
+        }
+        }
   return (
     <>
-    <h4>{formMessage}</h4>
-      <form class="mt-5 p-3 shadow border border-rounded border-white" onSubmit={(e)=>{createUser}}>
+      <form class="mt-5 p-3 shadow border border-rounded border-white" onSubmit= {createUser}>
       <div className="form-group">
       </div>
         <div class="form-group" >
@@ -90,63 +98,64 @@ const handleConfirmPassword = (e) => {
           <input
             class=" shadow border border-rounded border-primary form-control"
             name="birthday"
+            required=""
             placeholder="datetime.today"
             type="date"onChange ={handleBirthday}/>
             <p class="text-danger">{birthdayError}</p>
         </div>
-        <div class="form-group" >
+         <div class="form-group" >
           <label class="mt-3"   htmlFor="userName">First Name:</label>
           <input
             class=" shadow border border-rounded border-primary form-control "
             name="userName"
-            placeholder="First Name"
+            placeholder="Pick a User Name"
             type="text"onChange={handleUserName}/>
             <p class="text-danger">{userNameError}</p>
-            
         </div>
-        <div class="form-group" >
-          <label class="mt-3" htmlFor="firstName">First Name:</label>
+            <div class="form-group" >
+          <label class="mt-3" htmlFor="First Name">First Name:</label>
           <input
             class=" shadow border border-rounded border-primary form-control"
             name="firstName"
-            placeholder="First Name"
-            type="text"onChange={ handleFirstName }/>
-             <p class="text-danger">{firstNameError}</p>
+            placeholder="Your First Name"
+            type="text"onChange={handleFirstName}/>
+            <p class="text-danger">{firstNameError}</p>
         </div>
         <div class="form-group" >
           <label class="mt-3" htmlFor="Last Name">Last Name:</label>
           <input
             class=" shadow border border-rounded border-primary form-control"
             type="text"
-            placeholder="lastName"
+            placeholder="Your Last Name"
             name="lastName"onChange={handleLastName}/>
             <p class="text-danger">{lastNameError}</p>
         </div>
         <div class="form-group" >
-          <label class="mt-3" htmlFor="email">Email</label>
+          <label class="mt-3" htmlFor="Email">Email</label>
           <input
             class=" shadow border border-rounded border-primary form-control"
-            name="email"
-            placeholder="email"
-            type="email"onChange={handleEmail}/>
+            type="email"
+            placeholder="Your email address"
+            name="email"onChange={handleEmail}/>
             <p class="text-danger">{emailError}</p>
-       </div>
-       <div class="form-group" >
-          <label class="mt-3" htmlFor="password">Password:</label>
-          <input class=" shadow border border-rounded border-primary form-control"
-            name="password"
-            placeholder="your password"
-            type="password"onChange={ handlePassword }/>
+        </div>
+        <div class="form-group" >
+          <label class="mt-3" htmlFor="password">Password</label>
+          <input
+            class=" shadow border border-rounded border-primary form-control"
+            type="password"
+            placeholder="Create A Password"
+            name="password"onChange={handlePassword}/>
             <p class="text-danger">{passwordError}</p>
         </div>
         <div class="form-group" >
-          <label class="mt-3" htmlFor="confirmPassword">Confirm Password:</label>
+          <label class="mt-3" htmlFor="password">Password</label>
           <input
-            class=" shadow border border-rounded border-primary form-control "
-            name="confirmPassword"
-            placeholder="your password"
-            type="password"onChange={handleConfirmPassword}/>
-            <p class="text-danger">{confimPasswordError}</p>
+            class=" shadow border border-rounded border-primary form-control"
+            type="password"
+            placeholder="Create A Password"
+            name="password"onChange={handleConfirmPassword}/>
+            <p class="text-danger">{confirmPasswordError}</p>
         </div>
         <div class="form-group" >
           <input class=" btn btn-secondary mt-3 mb-4 shadow border border-rounded border-primary form-control"
@@ -154,6 +163,7 @@ const handleConfirmPassword = (e) => {
         </div>
       </form>
     <div>
+      
         <h3>New User</h3>
         <table class="table table-striped border border-rounded border-dark">
             <thead class="thead thead-dark border border-rounded">
@@ -172,14 +182,10 @@ const handleConfirmPassword = (e) => {
                 <td>{lastName}</td>
                 <td>{email}</td>
                 <td>{password}</td>
-                <td>{confirmPassword}</td>
+                <td>{confirmPassword}</td> 
             </tbody>
         </table>
     </div>
     </>
-   );
-  };
- };
-};
-
-export default UserForm;
+  )};
+  export default UserForm;
